@@ -50,7 +50,7 @@ I will assume you have the following software installed on your computer:
 1. [Terraform](https://developer.hashicorp.com/terraform/install)
 2. [Python](https://www.python.org/downloads/)
 3. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
-4. [Python Requirements]()
+4. [Python Requirements](https://github.com/afoley587/vault-terraform-ansible/blob/main/requirements.txt)
 
 I will also assume you have an AWS account setup.
 
