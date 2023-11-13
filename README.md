@@ -8,6 +8,8 @@ keys, and other sensitive data across dynamic infrastructure. In this
 blog post, we will delve into the intricate world of deploying HashiCorp 
 Vault on the AWS cloud using two powerful automation tools: Terraform and Ansible.
 
+![Thumbnail](./images/thumbnail.png)
+
 1. What is HashiCorp Vault?
 HashiCorp Vault is a dynamic and flexible open-source tool designed to secure, 
 store, and control access to sensitive information within a modern infrastructure. 
@@ -1262,3 +1264,10 @@ aws ssm start-session \
 Now, we can navigate to `localhost:8200` in a browser to see our vault instance!
 
 ![Vault Instance](./images/vault-browser.png)
+
+## Cleaning up
+If you're trying to stay on the free-tier like me, don't forget to run a `terraform destroy`
+after you're done poking around!
+
+## References
+Please feel free to poke around my [github repo](https://github.com/afoley587/vault-terraform-ansible) for full code!
