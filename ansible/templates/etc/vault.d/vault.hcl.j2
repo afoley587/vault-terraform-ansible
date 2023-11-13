@@ -1,0 +1,24 @@
+disable_mlock = true
+ui = true
+
+listener "tcp" {
+  tls_disable = 1
+  address = "[::]:8200"
+  cluster_address = "[::]:8201"
+  telemetry = {
+    unauthenticated_metrics_access = true
+  }
+}
+
+telemetry {
+  prometheus_retention_time = "30m"
+  disable_hostname = true
+}
+
+storage "s3" {
+  access_key = "{{ access_key }}"
+  secret_key = "{{ secret_key }}"
+  bucket     = "{{ bucket }}"
+  kms_key_id = "{{ kms_key_id }}"
+  region     = "{{ region }}"
+}

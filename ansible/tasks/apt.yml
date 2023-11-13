@@ -1,0 +1,16 @@
+- name: Add HashiCorp Apt Key
+  become: true
+  get_url:
+    url: https://apt.releases.hashicorp.com/gpg
+    dest: /usr/share/keyrings/hashicorp-archive-keyring.asc
+  register: _download_key
+
+- name: Add HashiCorp Apt Repo
+  apt_repository:
+    repo: "deb [signed-by={{ _download_key.dest }}] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+    state: present
+
+- name: Install vault
+  apt:
+    name: vault
+    update_cache: true

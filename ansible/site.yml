@@ -1,0 +1,14 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: vault setup
+  hosts: vault
+  gather_facts: true
+
+  tasks:
+  
+    - name: Run Apt Tasks
+      include_tasks: ./tasks/apt.yml
+    
+    - name: Run Vault Tasks
+      include_tasks: ./tasks/vault.yml
+

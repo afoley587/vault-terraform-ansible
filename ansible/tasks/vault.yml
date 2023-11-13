@@ -1,0 +1,47 @@
+- name: Ensure vault is installed
+  shell: which vault
+  register: _vault_bin
+
+- name: Add Vault Group
+  group: 
+    name: vault
+  register: _vault_group
+
+- name: Add vault user
+  user:
+    name: vault
+    groups: "{{ _vault_group.name }}"
+    shell: /sbin/nologin
+    create_home: no
+    append: true
+    comment: "Vault service user"
+    state: present
+  register: _vault_user
+  
+- name: Create vault config file
+  template:
+    src: templates/etc/vault.d/vault.hcl.j2
+    dest: /etc/vault.d/vault.hcl
+  vars:
+    access_key: "{{ iam_access_key }}"
+    secret_key: "{{ iam_secret_key }}"
+    bucket: "{{ s3_bucket_name }}"
+    kms_key_id: "{{ kms_key_alias }}"
+    region: us-east-2
+  register: _vault_config
+
+- name: Create vault systemd file
+  template:
+    src: templates/etc/systemd/system/vault.service.j2
+    dest: /etc/systemd/system/vault.service
+  vars:
+    vault_bin: "{{ _vault_bin.stdout }}"
+    vault_config: "{{ _vault_config.dest }}"
+    vault_user: "{{ _vault_user.name }}"
+    vault_group: "{{ _vault_group.name }}"
+
+- name: start vault
+  systemd:
+    state: started
+    daemon_reload: true
+    name: vault
